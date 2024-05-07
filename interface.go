@@ -1,46 +1,29 @@
 package main
 
-import "fmt"
-
-type bot interface {
-
-	// this essentially said, whoever you in this program of function of `getGreeting()` and return string,
-	// you are now honorary member of a 3rd type `bot` interface
-	getGreeting() string
+// declare an interface called Printer
+// so any type (in our case it is, struct) which tries
+// to implement this interface should have a method called Print
+type Animal interface {
+	Talk()
 }
 
-type calculation interface {
-	getResult(x, y float32) float32
+// so we declare a struct called Person
+// and try to implement the Printer interface
+type Human struct {
 }
 
-type add struct{}
-type sub struct{}
+type Cat struct{}
 
-type englishBot struct{}
-type spanishBot struct{}
+// ! NOTE: in go there is no explicit declaration of implementing an interface
+// so we just have to declare a method with the same name as the interface
+// and that method should have a receiver of the same type
+// so here we have a method called Print with a receiver of type Person
 
-func printGreeting(b bot) {
-	fmt.Println(b.getGreeting())
+// now we can say that Person [struct] implements the Printer interface
+func (p *Human) Talk() {
+	println("Hello, I am a Human struct type and i can talk")
 }
 
-func (englishBot) getGreeting() string {
-	return "Hi, there"
-}
-
-func (spanishBot) getGreeting() string {
-	return "Hola!"
-}
-
-func getAddOrSub(c calculation, x, y float32) {
-	fmt.Println("The result of x and y is:", c.getResult(x, y))
-	// c has the ability to access both the `getResult` of reciever add and sub
-	// because, both the add and sub are a member of calculation interface
-}
-
-func (a add) getResult(x, y float32) float32 {
-	return x + y
-}
-
-func (s sub) getResult(x, y float32) float32 {
-	return x - y
+func (p *Cat) Talk() {
+	println("Hello, I am a Cat struct type but i can't talk")
 }
