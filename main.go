@@ -4,26 +4,28 @@ import "fmt"
 
 func main() {
 
-	// pointer
+	//  initialize a map of strings to integers
+	mapInt := map[string]int64{
+		"one":   1,
+		"two":   2,
+		"three": 3,
+	}
 
-	var x int = 10
-	var ptr *int = &x
+	// initialize a map of strings to floats
+	mapFloat := map[string]float64{
+		"one1":  1.1,
+		"two":   2.2,
+		"three": 3.3,
+	}
 
-	fmt.Println("Value of x:", x)
-	fmt.Println("Address of x:", &x)
+	fmt.Println(SumInits(mapInt))    // 6
+	fmt.Println(SumFloats(mapFloat)) // 6.6
 
-	fmt.Println("addresse of ptr points to:", ptr)
-	fmt.Println("Value of ptr that points to:", *ptr)
-	fmt.Println("Address of ptr:", &ptr)
+	// Generic func of above two functions
+	fmt.Println(SumIntAndFloat[string, int64](mapInt))     // 6
+	fmt.Println(SumIntAndFloat[string, float64](mapFloat)) // 6.6
 
-	//
-	y := &Str{number: 10}
-	z := 10
-	fmt.Println("Value of y:", y.number)
-	fmt.Println("Value of z:", z)
-	y.addOneWithStruct()
-	addOneWithParams(&z)
-	fmt.Println("Value of y after addOne:", y.number)
-	fmt.Println("Value of z after addOne:", z)
-
+	// isLess func
+	fmt.Println(isLess[int64](1, 2))       // true
+	fmt.Println(isLess[float64](1.5, 1.7)) // true
 }
