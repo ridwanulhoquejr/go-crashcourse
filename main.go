@@ -2,30 +2,36 @@ package main
 
 import "fmt"
 
+func handlePanic() {
+	a := recover()
+
+	if a != nil {
+		fmt.Println("Recovered from panic")
+	}
+}
+
 func main() {
 
-	//  initialize a map of strings to integers
-	mapInt := map[string]int64{
-		"one":   1,
-		"two":   2,
-		"three": 3,
-	}
+	// defer, panic and recover
+	//
+	// Defer is used to ensure that a function call is performed later in a program’s execution,
+	// usually for purposes of cleanup. defer is often used where e.g. ensure and finally would be used in other languages.
 
-	// initialize a map of strings to floats
-	mapFloat := map[string]float64{
-		"one1":  1.1,
-		"two":   2.2,
-		"three": 3.3,
-	}
+	// panic, recover and defer
 
-	fmt.Println(SumInits(mapInt))    // 6
-	fmt.Println(SumFloats(mapFloat)) // 6.6
+	fmt.Println("Before panic")
+	runPanic()
+	fmt.Println("After panic recovery")
 
-	// Generic func of above two functions
-	fmt.Println(SumIntAndFloat[string, int64](mapInt))     // 6
-	fmt.Println(SumIntAndFloat[string, float64](mapFloat)) // 6.6
-
-	// isLess func
-	fmt.Println(isLess[int64](1, 2))       // true
-	fmt.Println(isLess[float64](1.5, 1.7)) // true
 }
+
+// however we can recover from this panic, by using recover function and defer inside the panic function
+func runPanic() {
+	defer handlePanic()
+	panic("Panic stated, so below code will not be executed")
+}
+
+// Bottom line:
+// 1. A defer statement pushes a function call onto a list. The list of saved calls is executed after the surrounding function returns.
+// 2. Deferred function calls are executed in Last In First Out order after the surrounding function returns.
+// 3. It is similar to the finally block in Other languages.
